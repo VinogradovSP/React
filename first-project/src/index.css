@@ -16,6 +16,39 @@ code {
   color: red;
 }
 .head {
-  text-align: center;
-  margin-top: 15%;
+  /* text-align: center; */
+  margin-top: 5%;
+  border: 3px solid #000;
+  border-radius: 25px;
+  min-height: 300px;
+  padding: 8px 8px 0;
+  box-sizing: border-box;
+  width: 40%;
+  box-shadow: 5px 5px 10px 1px #000;
+}
+.messageBlock {
+  text-align: start;
+  border: 3px solid #000;
+  border-radius: 15px;
+  max-width: 50%;
+  padding: 5px;
+  margin-top: 5px;
+}
+.messageDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.contaner {
+  display: flex;
+  justify-content: center;
+}
+.messageFutter {
+  padding: 20px;
+  position: sticky;
+  top: 80%;
+  background: #d2f5e7;
+  border-radius: 0 0 25px 25px;
+  display: flex;
+  justify-content: space-evenly;
 }
