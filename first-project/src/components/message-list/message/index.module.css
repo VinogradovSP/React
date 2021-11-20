@@ -12,32 +12,45 @@ code {
     monospace;
 }
 
-.span {
-  color: red;
-}
-.head {
-  /* text-align: center; */
+.messageHead {
   margin-top: 5%;
+  box-shadow: 5px 5px 10px 1px #000;
   border: 3px solid #000;
   border-radius: 25px;
-  min-height: 300px;
   padding: 8px 8px 0;
-  box-sizing: border-box;
-  width: 40%;
-  box-shadow: 5px 5px 10px 1px #000;
+  width: 800px;
+  height: 520px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
 }
 .messageBlock {
-  text-align: start;
   border: 3px solid #000;
   border-radius: 15px;
-  max-width: 50%;
+  max-width: 60%;
   padding: 5px;
   margin-top: 5px;
+  background-color: #f8f863;
+}
+.messageBlockBot {
+  margin-left: 0;
+  margin-right: auto;
+  background-color: #b2aeff;
 }
 .messageDiv {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  max-height: 80%;
+  overflow-y: auto;
+  margin-left: 32%;
+  width: 68%;
+}
+.messageTime {
+  text-align: end;
+  font-size: 10px;
+  color: #757171;
 }
 .contaner {
   display: flex;
