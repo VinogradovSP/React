@@ -11,6 +11,13 @@ export const App = () => {
 
   const refAuthor = useRef(null);
   const refText = useRef(null);
+  const refScroll = useRef(null);
+
+  useEffect(() => {
+    if (refScroll.current) {
+      refScroll.current.scrollTo(0, refScroll.current.scrollHeight);
+    }
+  }, [messageList]);
 
   useEffect(() => {
     const lastMessage = messageList[messageList.length - 1];
@@ -63,7 +70,7 @@ export const App = () => {
     <div className={styles.contaner}>
       <div className={styles.messageHead}>
         <Heading />
-        <div className={styles.messageDiv}>
+        <div className={styles.messageDiv} ref={refScroll}>
           {messageList.map((message) => (
             <Message message={message} key={message.date} />
           ))}
@@ -72,7 +79,7 @@ export const App = () => {
         <div className={styles.messageFutter}>
           <input
             ref={refAuthor}
-            placeholder="Введите ваше имя"
+            placeholder="enter your name ..."
             onKeyPress={handlePressInputAuthor}
             onChange={(event) => {
               setAuthor(event.target.value);
@@ -82,7 +89,7 @@ export const App = () => {
 
           <input
             ref={refText}
-            placeholder="Введите сообщение"
+            placeholder="enter a message ..."
             onKeyPress={handlePressInputText}
             onChange={(event) => {
               setText(event.target.value);
