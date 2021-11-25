@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 import { Message } from "./message";
-import { ChatList } from "./ChatList";
-import { Heading } from "./Heading";
 import styles from "./message/index.module.css";
 
 export const App = () => {
-  const [messageList, setMessageList] = useState([]);
+  const { roomId } = useParams();
+  const [messageList, setMessageList] = useState({});
   const [author, setAuthor] = useState("");
   const [text, setText] = useState("");
 
@@ -20,23 +20,27 @@ export const App = () => {
   }, [messageList]);
 
   useEffect(() => {
-    const lastMessage = messageList[messageList.length - 1];
+    const roomMessages = messageList[roomId] ?? [];
+    const lastMessage = roomMessages[roomMessages.length - 1];
     let timerId = null;
 
-    if (messageList.length && lastMessage.author !== "Bot") {
+    if (roomMessages.length && lastMessage.author !== "Bot") {
       timerId = setTimeout(() => {
-        setMessageList([
+        setMessageList({
           ...messageList,
-          {
-            date: new Date().toLocaleTimeString(),
-            author: "Bot",
-            text: `Hello ${lastMessage.author.toUpperCase()}, how can I help you?`,
-          },
-        ]);
+          [roomId]: [
+            ...(messageList[roomId] ?? []),
+            {
+              author: "Bot",
+              text: `Hello ${lastMessage.author.toUpperCase()}, how can I help you?`,
+              date: new Date().toLocaleTimeString(),
+            },
+          ],
+        });
       }, 1500);
     }
     return () => clearInterval(timerId);
-  }, [messageList]);
+  }, [messageList, roomId]);
 
   useEffect(() => {
     refAuthor.current?.focus();
@@ -44,10 +48,13 @@ export const App = () => {
 
   const addMessage = () => {
     if (author && text) {
-      setMessageList([
+      setMessageList({
         ...messageList,
-        { author: author, text: text, date: new Date().toLocaleTimeString() },
-      ]);
+        [roomId]: [
+          ...(messageList[roomId] ?? []),
+          { author: author, text: text, date: new Date().toLocaleTimeString() },
+        ],
+      });
       setAuthor("");
       setText("");
     }
@@ -66,38 +73,36 @@ export const App = () => {
     refAuthor.current?.focus();
   };
 
-  return (
-    <div className={styles.contaner}>
-      <div className={styles.messageHead}>
-        <Heading />
-        <div className={styles.messageDiv} ref={refScroll}>
-          {messageList.map((message) => (
-            <Message message={message} key={message.date} />
-          ))}
-        </div>
-        <ChatList />
-        <div className={styles.messageFutter}>
-          <input
-            ref={refAuthor}
-            placeholder="enter your name ..."
-            onKeyPress={handlePressInputAuthor}
-            onChange={(event) => {
-              setAuthor(event.target.value);
-            }}
-            value={author}
-          />
+  const roomMessages = messageList[roomId] ?? [];
 
-          <input
-            ref={refText}
-            placeholder="enter a message ..."
-            onKeyPress={handlePressInputText}
-            onChange={(event) => {
-              setText(event.target.value);
-            }}
-            value={text}
-          />
-          <button onClick={addMessage}>addMessage</button>
-        </div>
+  return (
+    <div className={styles.messageHead}>
+      <div className={styles.messageDiv} ref={refScroll}>
+        {roomMessages.map((message) => (
+          <Message message={message} key={message.date} />
+        ))}
+      </div>
+      <div className={styles.messageFutter}>
+        <input
+          ref={refAuthor}
+          placeholder="enter your name ..."
+          onKeyPress={handlePressInputAuthor}
+          onChange={(event) => {
+            setAuthor(event.target.value);
+          }}
+          value={author}
+        />
+
+        <input
+          ref={refText}
+          placeholder="enter a message ..."
+          onKeyPress={handlePressInputText}
+          onChange={(event) => {
+            setText(event.target.value);
+          }}
+          value={text}
+        />
+        <button onClick={addMessage}>addMessage</button>
       </div>
     </div>
   );

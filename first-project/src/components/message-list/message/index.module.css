@@ -13,13 +13,8 @@ code {
 }
 
 .messageHead {
-  margin-top: 5%;
-  box-shadow: 5px 5px 10px 1px #000;
-  border: 3px solid #000;
-  border-radius: 25px;
   padding: 8px 8px 0;
-  width: 800px;
-  height: 520px;
+  height: 83vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -52,10 +47,7 @@ code {
   font-size: 10px;
   color: #757171;
 }
-.contaner {
-  display: flex;
-  justify-content: center;
-}
+
 .messageFutter {
   padding: 20px;
   position: sticky;
