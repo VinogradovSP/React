@@ -1,0 +1,16 @@
+.top {
+  text-align: center;
+  background: #bfff97;
+  align-items: center;
+  height: 100px;
+  border-radius: 25px 25px 0 0;
+  margin: 8px;
+  padding: 1px;
+}
+.top_link {
+  display: flex;
+  justify-content: space-evenly;
+}
+.top a {
+  text-decoration: none;
+}
